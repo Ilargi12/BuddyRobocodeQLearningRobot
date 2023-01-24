@@ -5,9 +5,9 @@ import java.awt.Color;
 import static BuddyRobocode.MathTransformations.*;
 
 /**
- * BartoBuddy - a robot by BPlewnia
+ * BuddyRobot - a robot by BPlewnia
  */
-public class BartoBuddy extends AdvancedRobot
+public class BuddyRobot extends AdvancedRobot
 {
 	//the reward policy should be killed > bullet hit > hit robot > hit wall > bullet miss > got hit by bullet
 	private double currentReward = 0.0;
@@ -33,7 +33,7 @@ public class BartoBuddy extends AdvancedRobot
 	private int totalNumRounds = 0;
 
 	/**
-	 * run: BartoBuddy's default behavior
+	 * run: BuddyRobot's default behavior
 	 */
 	public void run() {
 		setColors(Color.black,Color.yellow,Color.blue); // body,gun,radar
@@ -220,24 +220,6 @@ public class BartoBuddy extends AdvancedRobot
 	public void onDeath(DeathEvent event) {
 		currentReward += roundLostReward;
 		updateKnowledge();
-	}
-
-	/**
-	 * onRoundEnded: What to do when round ends
-	 */
-	@Override
-	public void onRoundEnded(RoundEndedEvent event) {
-		if (every100Rounds < 100) {
-			every100Rounds++;
-		} else {
-			roundCount++;
-			System.out.println("\n\n !!!!!!!!! " + "win percentage" + " " + ((numberOfWonRounds / every100Rounds) * 100) + "\n\n");
-			every100Rounds = 0;
-			numberOfWonRounds = 0;
-		}
-		totalNumRounds++;
-		if (totalNumRounds % 1000 == 0) this.epsilon = this.epsilon > 0.05 ? this.epsilon - 0.05 : 0;
-		System.out.println("total: " + totalNumRounds + ", epsilon:" + epsilon);
 	}
 
 }
