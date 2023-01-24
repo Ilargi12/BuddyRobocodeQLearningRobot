@@ -1,6 +1,7 @@
 package BuddyRobocode;
 import robocode.*;
 import java.awt.Color;
+import java.io.*;
 
 import static BuddyRobocode.MathTransformations.*;
 
@@ -57,7 +58,7 @@ public class BuddyRobot extends AdvancedRobot
 		firepower = firepower > 3 ? 3 : firepower;
 		setTurnRadarRightRadians(Double.POSITIVE_INFINITY);
 		rotateGunAngle(firepower);
-		setFire(firepower);
+		if (getGunHeat() == 0 && firepower >= 1.0) setFire(firepower);
 		execute();
 	}
 
@@ -221,5 +222,20 @@ public class BuddyRobot extends AdvancedRobot
 		currentReward += roundLostReward;
 		updateKnowledge();
 	}
+
+	@Override
+	public void onRoundEnded(RoundEndedEvent event) {
+		if (every100Rounds < 100) {
+			every100Rounds++;
+		} else {
+			every100Rounds = 0;
+			numberOfWonRounds = 0;
+		}
+		totalNumRounds++;
+		if (totalNumRounds % 1000 == 0) epsilon = epsilon > 0.05 ? epsilon - 0.05 : 0;
+		System.out.println("total: " + totalNumRounds + ", epsilon:" + epsilon);
+	}
+
+
 
 }
