@@ -22,7 +22,7 @@ public class BuddyRobot extends AdvancedRobot
 
 	private final double learningRate = 0.8;
 	private final double discountFactor = 0.95;
-	private double epsilon = 0.5;
+	private double epsilon = 0.05;
 
 	private EnemyRobot enemyRobot = new EnemyRobot();
 	private QTable qTable = new QTable();
@@ -87,24 +87,28 @@ public class BuddyRobot extends AdvancedRobot
 		this.wallWasHit = 0;
 
 		switch (currentAction) {
-			case Action.moveForward -> setAhead(Action.moveDistance);
-			case Action.moveBack -> setBack(Action.moveDistance);
-			case Action.moveForwardRight -> {
+			case Action.moveForward:
+				setAhead(Action.moveDistance);
+				break;
+			case Action.moveBack:
+				setBack(Action.moveDistance);
+				break;
+			case Action.moveForwardRight:
 				setAhead(Action.moveDistance);
 				setTurnRight(45.0);
-			}
-			case Action.moveForwardLeft -> {
+				break;
+			case Action.moveForwardLeft:
 				setAhead(Action.moveDistance);
 				setTurnLeft(45.0);
-			}
-			case Action.moveBackRight -> {
+				break;
+			case Action.moveBackRight:
 				setBack(Action.moveDistance);
 				setTurnRight(45.0);
-			}
-			case Action.moveBackLeft -> {
+				break;
+			case Action.moveBackLeft:
 				setBack(Action.moveDistance);
 				setTurnLeft(45.0);
-			}
+				break;
 		}
 		execute();
 	}
